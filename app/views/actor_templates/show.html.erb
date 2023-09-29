@@ -1,10 +1,36 @@
 <h1>
-  Actor #<%= @the_actor.id %> details
+<% act_id = params.fetch("actor_id") %>
+<% actor = Actor.where(:id => act_id).at(0) %>
+  Actor #<%= act_id %> details
 </h1>
 
 <a href="/actors">
   Go back
 </a>
+
+<br>
+
+<a href="/delete_actor/<%= act_id %>">
+    Delete actor
+  </a>
+<hr>
+
+<form action="/update_actor/<%= act_id %>"  method="post" >
+  <label for="name_update">Name</label>
+  <input id="name_update" type="text" name="actor_name_update" value="<%= actor.name %>"></input><br>
+
+  <label for="dob_update">Dob</label>
+  <input id="dob_update" type="date" name="actor_dob_update" value="<%= actor.dob %>"></input><br>
+
+  <label for="bio_update">Bio</label>
+  <textarea id="bio_update" type="text_box" name="actor_bio_update"><%= actor.bio %></textarea><br>
+
+  <label for="image_update">Image</label>
+  <input id="image_update" type="text" name="dactor_image_update" value="<%= actor.image %>"></input><br>
+
+  <button>Update director</button>
+
+</form>
 
 <hr>
 
@@ -13,42 +39,42 @@
     Name
   </dt>
   <dd>
-    <%= @the_actor.name %>
+    <%= actor.name %>
   </dd>
 
   <dt>
     Dob
   </dt>
   <dd>
-    <%= @the_actor.dob %>
+    <%= actor.dob %>
   </dd>
 
   <dt>
     Bio
   </dt>
   <dd>
-    <%= @the_actor.bio %>
+    <%= actor.bio %>
   </dd>
 
   <dt>
     Image
   </dt>
   <dd>
-    <img src="<%= @the_actor.image %>" style="width:250px;">
+    <img src="<%= actor.image %>" style="width:250px;">
   </dd>
 
   <dt>
     Created at
   </dt>
   <dd>
-    <%= @the_actor.created_at %>
+    <%= actor.created_at %>
   </dd>
 
   <dt>
     Updated at
   </dt>
   <dd>
-    <%= @the_actor.updated_at %>
+    <%= actor.updated_at %>
   </dd>
 </dl>
 
@@ -78,7 +104,7 @@
     </th>
   </tr>
 
-  <% a_id = @the_actor.id %>
+  <% a_id = act_id %>
 
   <% matching_characters = Character.where({ :actor_id => a_id }) %>
 

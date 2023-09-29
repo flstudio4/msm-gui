@@ -7,11 +7,52 @@ class ActorsController < ApplicationController
   end
 
   def show
-    the_id = params.fetch("path_id")
+    the_id = params.fetch("actor_id")
 
     matching_actors = Actor.where({ :id => the_id })
     @the_actor = matching_actors.at(0)
       
     render({ :template => "actor_templates/show" })
+  end
+
+  def create
+    @actor = Actor.new
+    @actor.name = params.fetch("actor_name")
+    @actor.dob = params.fetch("actor_dob")
+    @actor.bio = params.fetch("actor_bio")
+    @actor.image = params.fetch("actor_image")
+
+    if @actor.valid?
+      @actor.save
+      redirect_to("/actors", { :notice => "Actor created successfully." })
+    else
+      redirect_to("/actors", { :notice => "Actor failed to create successfully." })
+    end
+  end
+
+  def update
+    the_id = params.fetch("actor_id")
+    @actor = Director.where({ :id => the_id }).at(0)
+
+    @actor.name = params.fetch("actor_name_update")
+    @actor.dob = params.fetch("actor_dob_update")
+    @actor.bio = params.fetch("actor_bio_update")
+    @actor.image = params.fetch("actor_image_update")
+
+    if @actor.valid?
+      @actor.save
+      redirect_to("/actors/#{the_id}", { :notice => "Actor updated successfully." })
+    else
+      redirect_to("/actors/#{the_id}", { :notice => "Actor failed to update successfully." })
+    end
+  end
+
+  def delete
+    the_id = params.fetch("actor_id")
+    @actor = Actor.where({ :id => the_id }).at(0)
+
+    @actor.destroy
+
+    redirect_to("/actors", { :notice => "Actor deleted successfully."} )
   end
 end

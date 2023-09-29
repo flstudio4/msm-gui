@@ -1,10 +1,36 @@
 <h1>
-  Director #<%= @the_director.id %> details
+<% dir_id = params.fetch("director_id") %>
+<% director = Director.where(:id => dir_id).at(0) %>
+  Director #<%= dir_id %> details
 </h1>
 
 <a href="/directors">
   Go back
 </a>
+
+<br>
+
+<a href="/delete_director/<%= dir_id %>">
+    Delete director
+  </a>
+<hr>
+
+<form action="/update_director/<%= dir_id %>"  method="post" >
+  <label for="name_update">Name</label>
+  <input id="name_update" type="text" name="director_name_update" value="<%= director.name %>"></input><br>
+
+  <label for="dob_update">Dob</label>
+  <input id="dob_update" type="date" name="director_dob_update" value="<%= director.dob %>"></input><br>
+
+  <label for="bio_update">Bio</label>
+  <textarea id="bio_update" type="text_box" name="director_bio_update"><%= director.bio %></textarea><br>
+
+  <label for="image_update">Image</label>
+  <input id="image_update" type="text" name="director_image_update" value="<%= director.image %>"></input><br>
+
+  <button>Update director</button>
+
+</form>
 
 <hr>
 
@@ -13,42 +39,43 @@
     Name
   </dt>
   <dd>
-    <%= @the_director.name %>
+  
+    <%= director.name %>
   </dd>
 
   <dt>
     Dob
   </dt>
   <dd>
-    <%= @the_director.dob %>
+    <%= director.dob %>
   </dd>
 
   <dt>
     Bio
   </dt>
   <dd>
-    <%= @the_director.bio %>
+    <%= director.bio %>
   </dd>
 
   <dt>
     Image
   </dt>
   <dd>
-    <img src="<%= @the_director.image %>" style="width:250px;">
+    <img src="<%= director.image %>" style="width:250px;">
   </dd>
 
   <dt>
     Created at
   </dt>
   <dd>
-    <%= @the_director.created_at %>
+    <%= director.created_at %>
   </dd>
 
   <dt>
     Updated at
   </dt>
   <dd>
-    <%= @the_director.updated_at %>
+    <%= director.updated_at %>
   </dd>
 </dl>
 
@@ -82,7 +109,7 @@
     </th>
   </tr>
 
-  <% the_id = @the_director.id %>
+  <% the_id = dir_id %>
 
   <% matching_movies = Movie.where({ :director_id => the_id }) %>
   
