@@ -1,10 +1,41 @@
 <h1>
-  Movie #<%= @the_movie.id %> details
+  <% m_id = params.fetch("movie_id") %>
+<% movie = Movie.where(:id => m_id).at(0) %>
+  Movie #<%= m_id %> details
 </h1>
 
 <a href="/movies">
   Go back
-</a>
+</a><br>
+
+<a href="/delete_movie/<%= m_id %>">
+    Delete movie
+  </a>
+
+<hr>
+
+<form action="/update_movie/<%= m_id %>" method="post">
+  <label for="title">Title</label>
+  <input id="title" type="text" name="movie_title" value="<%= movie.title %>"></input><br>
+
+  <label for="year">Year</label>
+  <input id="year" type="text" name="movie_year" value="<%= movie.year %>"></input><br>
+
+  <label for="duration">Duration</label>
+  <input id="duration" type="text" name="movie_duration" value="<%= movie.duration %>"></input><br>
+
+  <label for="description">Description</label>
+  <input id="description" type="text" name="movie_description" value="<%= movie.description %>"></input><br>
+
+  <label for="image">Image</label>
+  <input id="image" type="text" name="movie_image" value="<%= movie.image %>"></input><br>
+
+  <label for="director_id">Director ID</label>
+  <input id="director_id" type="text" name="movie_director_id" value="<%= movie.director_id %>"></input><br>
+
+  <button>Update movie</button>
+
+</form>
 
 <hr>
 
@@ -53,8 +84,11 @@
     <% matching_directors = Director.where({ :id => dir_id }) %>
     
     <% the_director = matching_directors.at(0) %>
-
+    <% if the_director != nil %>
     <%= the_director.name %>
+    <% else %>
+    No director
+    <% end %>
   </dd>
 
   <dt>

@@ -32,7 +32,7 @@ class ActorsController < ApplicationController
 
   def update
     the_id = params.fetch("actor_id")
-    @actor = Director.where({ :id => the_id }).at(0)
+    @actor = Actor.where({ :id => the_id }).at(0)
 
     @actor.name = params.fetch("actor_name_update")
     @actor.dob = params.fetch("actor_dob_update")

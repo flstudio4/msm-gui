@@ -4,6 +4,33 @@
 
 <hr>
 
+<form action="/create_movie"  method="post" >
+  <label for="title">Title</label>
+  <input id="title" type="text" name="movie_title"></input><br>
+
+  <label for="year">Year</label>
+  <input id="year" type="text" name="movie_year"></input><br>
+
+  <label for="duration">Year</label>
+  <input id="duration" type="text" name="movie_duration"></input><br>
+
+  <label for="description">Description</label>
+  <input id="description" type="text" name="movie_description"></input><br>
+
+  <label for="image">Image</label>
+  <input id="image" type="text" name="movie_image"></input><br>
+
+  <label for="director_id">Director ID</label>
+  <input id="director_id" type="text" name="movie_director_id"></input><br>
+
+  <button>Create movie</button>
+
+</form>
+
+
+
+<hr>
+
 <table border="1">
   <tr>
     <th>
@@ -52,8 +79,11 @@
       <% matching_directors = Director.where({ :id => a_movie.director_id }) %>
       
       <% the_director = matching_directors.at(0) %>
-
+      <% if the_director == nil%>
+        uh oh
+      <% else %>  
       <%= the_director.name %>
+      <% end %>
     </td>
 
     <td>
